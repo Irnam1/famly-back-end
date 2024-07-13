@@ -1,10 +1,11 @@
 const express = require("express")
 const app = express()
 const path = require('path')
+const { logger } = require('./middleware/logger')
 const cookieParser = require("cookie-parser")
 const PORT = process.env.PORT || 3500
 
-
+app.use(logger)
 
 app.use(express.json())
 
