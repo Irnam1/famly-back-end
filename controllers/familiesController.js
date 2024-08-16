@@ -51,7 +51,7 @@ const createNewFamily = asyncHandler (async(req, res)=>{
 // @route PATCH /families
 // @access Private
 const updateFamily = asyncHandler (async(req, res)=>{
-    const {id, name, description, familyId} = req.body
+    const {id, name, description} = req.body
 
     // confirm data
     if (!id || !name) {
@@ -67,7 +67,7 @@ const updateFamily = asyncHandler (async(req, res)=>{
     // check for duplicate
     const duplicate = await Family.findOne({name}).lean().exec()
 
-    // Allow updates to the original user 
+    // Allow updates to the original family 
     if (duplicate && duplicate?._id.toString() !== id){
         return res.status(409).json({message : "Duplicate name"})
     }
@@ -103,7 +103,7 @@ const deleteFamily = asyncHandler (async(req, res)=>{
 
     const result = await family.deleteOne()
 
-    const reply = `Family ${family.name} with ID ${family.id}`
+    const reply = `Family ${family.name} with ID ${family.id} deleted`
     res.json(reply)
 })
 
